@@ -65,8 +65,10 @@ class MarketController extends Controller
             'name' => ['required', 'string', 'max:255', 'unique:markets,name,' . $market->id]
         ]);
 
-        $market->name = $request->name;
-        $market->slug = Str::slug($request->name);
+        $market->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name)
+        ]);
 
         return new MarketResource($market);
     }
