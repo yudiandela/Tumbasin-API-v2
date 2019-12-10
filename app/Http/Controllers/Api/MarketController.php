@@ -20,9 +20,18 @@ class MarketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $markets = Market::latest()->paginate();
+        $markets = Market::latest();
+
+        $search = Str::slug($request->search);
+
+        if ($search) {
+            $markets->where('slug', 'LIKE', '%' . $search . '%');
+        }
+
+        $markets = $markets->paginate();
+
         return MarketResource::collection($markets);
     }
 
