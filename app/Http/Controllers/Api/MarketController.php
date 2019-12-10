@@ -10,6 +10,11 @@ use Illuminate\Support\Str;
 
 class MarketController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('role:admin', ['except' => ['index', 'show']]);
