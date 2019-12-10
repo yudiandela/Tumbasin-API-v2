@@ -29,5 +29,16 @@ Route::namespace('Api')->name('api.')->prefix('v2')->middleware('api')->group(fu
         Route::post('category', 'CategoryController@store')->name('category.store');
         Route::put('category/{category}', 'CategoryController@update')->name('category.update');
         Route::delete('category/{category}', 'CategoryController@destroy')->name('category.destroy');
+
+        /**
+         * Route Product
+         */
+        Route::get('products', 'ProductController@index')->name('product.index');
+        Route::get('product/{product}', 'ProductController@show')->name('product.show');
+
+        // Product Admin Access role:admin
+        Route::post('product', 'ProductController@store')->name('product.store');
+        Route::put('product/{product}', 'ProductController@update')->name('product.update');
+        Route::delete('product/{product}', 'ProductController@destroy')->name('product.destroy');
     });
 });
