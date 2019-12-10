@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::latest();
+        $products = Product::with(['category'])->latest();
 
         $search = Str::slug($request->search);
 
