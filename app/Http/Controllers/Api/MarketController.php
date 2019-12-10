@@ -38,9 +38,22 @@ class MarketController extends Controller
             'name' => ['required', 'string', 'max:255', 'unique:markets']
         ]);
 
+        $image = 'https://dummyimage.com/600x400/8a8a8a/000000&text=No+Image+Available';
+
+        if ($request->image !== null) {
+            $image = uploadFile('image', $request);
+
+            if (!isValidLink($image)) {
+                return response()->json([
+                    'error' => 'Image Fail'
+                ], 400);
+            }
+        }
+
         $market = Market::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
+            'name'  => $request->name,
+            'slug'  => Str::slug($request->name),
+            'image' => $image
         ]);
 
         return new MarketResource($market);
@@ -70,9 +83,22 @@ class MarketController extends Controller
             'name' => ['required', 'string', 'max:255', 'unique:markets,name,' . $market->id]
         ]);
 
+        $image = $market->image;
+
+        if ($request->image !== null) {
+            $image = uploadFile('image', $request);
+
+            if (!isValidLink($image)) {
+                return response()->json([
+                    'error' => 'Image Fail'
+                ], 400);
+            }
+        }
+
         $market->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
+            'name'  => $request->name,
+            'slug'  => Str::slug($request->name),
+            'image' => $image
         ]);
 
         return new MarketResource($market);

@@ -17,6 +17,7 @@ class CreateMarketsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('slug');
+            $table->text('image');
             $table->timestamps();
         });
     }
